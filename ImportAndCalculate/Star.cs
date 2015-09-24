@@ -1,8 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ImportAndCalculate
 {
@@ -62,13 +63,34 @@ namespace ImportAndCalculate
 		public int MultCnt;
 		public string NoteFlag;
 
-		public bool ReadFromLine(string line)
+		public static Dictionary<int, Star> LoadYaleStarTable(string path)
 		{
-			int[] beg = 
+			try
 			{
-				
-			};
-			return true;
+				FileStream yaleStarTable = new FileStream(path, FileMode.Open);
+				StreamReader reader = new StreamReader(yaleStarTable);
+				Dictionary<int, Star> starDic = new Dictionary<int, Star>();
+				Star star;
+				string line;
+				while (true)
+				{
+					line = reader.ReadLine();
+					Debug.Print(line);
+					if (string.IsNullOrEmpty(line))
+						break;
+					star = new Star();
+					if (star.ReadFromLine(line))
+						starDic.Add(star.HR, star);
+					else
+						return null;
+				}
+				return starDic;
+			}
+			catch (FileNotFoundException fnfe)
+			{
+				Debug.Print(fnfe.Message);
+			}
+			return null;
 		}
     }
 }
