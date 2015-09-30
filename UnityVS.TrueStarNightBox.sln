@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.TrueStarNightBox.CSharp.Editor", "UnityVS.TrueStarNightBox.CSharp.Editor.csproj", "{B6679A95-E26F-68D3-CDDB-F55B9D9FCB25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportAndCalculate", "ImportAndCalculate\ImportAndCalculate.csproj", "{AACD4069-6C52-48DA-AE61-55906D84951F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YaleConverter", "ImportAndCalculate\YaleConverter.csproj", "{AACD4069-6C52-48DA-AE61-55906D84951F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

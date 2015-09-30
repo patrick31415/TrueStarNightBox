@@ -7,8 +7,8 @@
     <ProjectGuid>{AACD4069-6C52-48DA-AE61-55906D84951F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImportAndCalculate</RootNamespace>
-    <AssemblyName>ImportAndCalculate</AssemblyName>
+    <RootNamespace>YaleConverter</RootNamespace>
+    <AssemblyName>YaleConverter</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
@@ -33,6 +33,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SkyBoxMaker.cs" />
+    <Compile Include="SkyPainter.cs" />
     <Compile Include="Star.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StarFilter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

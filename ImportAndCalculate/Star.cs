@@ -1,14 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Text;
 
-namespace ImportAndCalculate
-{
-    public class Star
-    {
+namespace YaleConverter {
+	public class Star {
+		static int length = 197;
+		static int[] data_length = { 4, 10, 11, 6, 6, 4, 1, 1, 1, 5, 2, 9, 2, 2, 4, 1, 2, 2, 2, 2, 2, 4, 1, 2, 2, 2, 6, 6, 5, 1, 1, 5, 1, 5, 1, 5, 1, 20, 1, 6, 6, 1, 5, 4, 4, 2, 3, 1, 4, 6, 4, 2, 1 };
+		public static Dictionary<int, Star> starDic = new Dictionary<int, Star>();
+
 		public int HR;
 		public string Name;
 		public string DM;
@@ -63,34 +63,193 @@ namespace ImportAndCalculate
 		public int MultCnt;
 		public string NoteFlag;
 
-		public static Dictionary<int, Star> LoadYaleStarTable(string path)
-		{
-			try
-			{
-				FileStream yaleStarTable = new FileStream(path, FileMode.Open);
-				StreamReader reader = new StreamReader(yaleStarTable);
-				Dictionary<int, Star> starDic = new Dictionary<int, Star>();
-				Star star;
-				string line;
-				while (true)
-				{
-					line = reader.ReadLine();
-					Debug.Print(line);
-					if (string.IsNullOrEmpty(line))
-						break;
-					star = new Star();
-					if (star.ReadFromLine(line))
-						starDic.Add(star.HR, star);
-					else
-						return null;
-				}
-				return starDic;
+		public static void ReadData(string path) {
+			FileStream fs = new FileStream(path, FileMode.Open);
+			StreamReader reader = new StreamReader(fs);
+			string s;
+			Star star;
+			while (true) {
+				s = reader.ReadLine();
+				if (string.IsNullOrEmpty(s))
+					break;
+				star = ReadFromLine(s);
+				starDic.Add(star.HR, star);
 			}
-			catch (FileNotFoundException fnfe)
-			{
-				Debug.Print(fnfe.Message);
-			}
-			return null;
+			fs.Close();
 		}
-    }
+
+		private static Star ReadFromLine(string line) {
+			length = 0;
+			foreach (int ii in data_length)
+				length += ii;
+			if (line.Length < length) {
+				StringBuilder sb = new StringBuilder();
+				sb.Append(' ', length - line.Length);
+				line += sb.ToString();
+			}
+			Star star = new Star();
+			string s;
+			int i = 0;
+			int index = 0;
+			s = line.Substring(0, data_length[i]);
+			star.HR = int.Parse(s);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.Name = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.DM = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.HD);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.SAO);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.FK5);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.IRflag = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.r_IRflag = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.Multiple = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.ADS = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.ADScomp = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.VarID = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.RAh1900);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.RAm1900);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.RAs1900);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.DEsigned1900 = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.DEd1900);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.DEm1900);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.DEs1900);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.RAh);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.RAm);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.RAs);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.DEsigned = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.DEd);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.DEm);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.DEs);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.GLON);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.GLAT);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.Vmag);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.n_Vmag = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.u_Vmag = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.BV);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.uBV = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.UB);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.uUb = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.RI);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.nRI = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.SpType = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.nSpType = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.pmRA);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.pmDE);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.nParallax = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.Parallax = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.RadVel);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.nRadVel = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.lRotVel = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.RotVel);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.uRotVel = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.Dmag);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			float.TryParse(s, out star.Sep);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.MultID = s;
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			int.TryParse(s, out star.MultCnt);
+			++i;
+			s = line.Substring(index += data_length[i - 1], data_length[i]);
+			star.NoteFlag = s;
+			return star;
+		}
+	}
 }
